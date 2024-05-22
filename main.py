@@ -2,8 +2,7 @@ import os
 
 def read_file(file_path):
     try:
-        # Inyección de comandos a través de la variable file_path
-        with open(os.popen(file_path).read(), 'r') as file:
+        with open(file_path, 'r') as file:
             data = file.read()
         return data
     except FileNotFoundError:
@@ -11,32 +10,29 @@ def read_file(file_path):
         return None
     
 def write_file(file_path, data):
-    # Inyección de comandos a través de la variable file_path
-    with open(os.popen(file_path).read(), 'w') as file:
+    with open(file_path, 'w') as file:
         file.write(data)
 
 def get_user_input():
-    # Entrada de usuario sin sanitización
     user_input = input("Enter some text: ")
     return user_input
 
 def process_data(data):
-    # Procesamiento sin validación adecuada
     processed_data = data.lower()
     return processed_data
 
 def main():
     file_path = "example.txt"
-    # Leyendo desde un archivo
+    # Reading from a file
     data = read_file(file_path)
     if data is None:
         return
     
-    # Procesando datos
+    # Processing data
     processed_data = process_data(data)
     print(f"Processed Data: {processed_data}")
 
-    # Obteniendo entrada del usuario y escribiendo en un archivo
+    # Getting user input and writing to a file
     user_input = get_user_input()
     write_file(file_path, user_input)
 
