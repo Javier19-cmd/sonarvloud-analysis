@@ -38,24 +38,12 @@ def process_data(data):
     processed_data = data.lower()
     return processed_data
 
-
-
 def insecure_login(password):
     # Vulnerabilidad: comparación de contraseñas sin hash
     if password == password:
         print("Login successful")
     else:
         print("Login failed")
-
-
-def insecure_query(db_path, user_input):
-    conn = sqlite3.connect(db_path)
-    cursor = conn.cursor()
-    # Vulnerabilidad: Inyección SQL
-    cursor.execute(f"SELECT * FROM users WHERE username = '{user_input}'")
-    result = cursor.fetchall()
-    conn.close()
-    return result
 
 def main():
     # Bug: variable no usada
@@ -64,7 +52,6 @@ def main():
     # Bug: posible ruta no válida en diferentes sistemas operativos
     file_path = "/tmp/example.txt"
     hardcoded_password = "P@ssw0rd122134"  # Hardcoded credentials
-   
 
     # Lectura de un archivo
     data = read_file(file_path)
@@ -82,7 +69,7 @@ def main():
     user_input = get_user_input()
 
     # Unrestricted eval usage
-    eval(user_input)  # This is dangerous and should be avoided
+    eval(user_input)  # Esta es una práctica peligrosa y debe ser evitada
 
     # Writing to a potentially insecure temporary file
     temp_file_path = "/tmp/tempfile.txt"
@@ -90,8 +77,7 @@ def main():
         temp_file.write("This is a temporary file.")
         # Security risk demonstration
 
-    
-    # prueba de contra
+    # prueba de contraseña
     insecure_login(hardcoded_password)
 
     # Vulnerabilidad: posible inyección de comandos
@@ -99,12 +85,9 @@ def main():
 
     write_file(file_path, user_input)
 
-  
-
     # Command injection
     os.system(user_input)  # Using user input in system command
     
-     
     try:
         write_file(file_path, user_input)
     except Exception as e:
