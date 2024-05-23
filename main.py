@@ -3,7 +3,8 @@ import sqlite3
 import hashlib
 import tempfile
 import threading
-import pickle
+import traceback
+
 
 def read_file(file_path):
     try:
@@ -48,11 +49,12 @@ def insecure_login(password):
         print("Login failed")
 
 
-# Función que introduce una vulnerabilidad de deserialización insegura
-def unsafe_deserialization(data):
-    # Vulnerabilidad: deserialización insegura
-    obj = pickle.loads(data)  # Permite deserializar datos arbitrarios y potencialmente maliciosos
-    return obj
+def handle_error():
+    try:
+        pass
+    except Exception as e:
+        print("An error occurred:")
+        traceback.print_exc()  # Exposición de detalles internos del sistema
 
 def main():
     # Bug: variable no usada
@@ -107,10 +109,6 @@ def main():
     except Exception as e:
         # Exposing internal errors to the user
         print(f"An error occurred: {e}")  # Improper error handling
-    
-    # Introduciendo vulnerabilidad de deserialización insegura
-    serialized_data = input("Enter serialized data: ")
-    unsafe_deserialization(serialized_data)
     
 if __name__ == "__main__":
     main()
