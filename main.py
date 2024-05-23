@@ -3,7 +3,13 @@ import sqlite3
 import hashlib
 import tempfile
 import threading
+import argparse
+import nmap
 
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='Escaneo de puertos con detección de versiones.')
+    parser.add_argument('target', metavar='target', type=str, help='Dirección IP del objetivo a escanear')
+    return parser.parse_args()
 
 def read_file(file_path):
     try:
