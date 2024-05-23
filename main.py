@@ -104,8 +104,12 @@ def main():
         # Exposing internal errors to the user
         print(f"An error occurred: {e}")  # Improper error handling
     
-    user_input1 = input("Introduce un objeto serializado: ")
-    obj = pickle.loads(user_input1)  # Permite deserializar datos arbitrarios y potencialmente maliciosos
+    conn = sqlite3.connect('example.db')
+    cursor = conn.cursor()
+
+    user_input = input("Introduce un nombre de usuario: ")
+    query = f"SELECT * FROM users WHERE username = '{user_input}'"
+    cursor.execute(query)  # Permite inyecciones SQL
 
     
 if __name__ == "__main__":
