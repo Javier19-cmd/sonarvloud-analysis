@@ -48,11 +48,6 @@ def insecure_login(password):
         print("Login failed")
 
 
-def create_threads():
-    # Vulnerabilidad: Creación de hilos sin gestión adecuada
-    for _ in range(1000):
-        threading.Thread(target=lambda: print("Thread running")).start()
-
 def insecure_query(db_path, user_input):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
