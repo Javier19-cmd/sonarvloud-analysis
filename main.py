@@ -53,15 +53,14 @@ def create_threads():
     for _ in range(1000):
         threading.Thread(target=lambda: print("Thread running")).start()
 
-def insecure_config():
-    # Vulnerabilidad: Configuración por defecto insegura
-    db_config = {
-        'user': 'root',
-        'password': 'root',
-        'host': 'localhost',
-        'database': 'test_db'
-    }
-    return db_config
+def insecure_query(db_path, user_input):
+    conn = sqlite3.connect(db_path)
+    cursor = conn.cursor()
+    # Vulnerabilidad: Inyección SQL
+    cursor.execute(f"SELECT * FROM users WHERE username = '{user_input}'")
+    result = cursor.fetchall()
+    conn.close()
+    return result
 
 def main():
     # Bug: variable no usada
