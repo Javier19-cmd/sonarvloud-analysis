@@ -48,7 +48,15 @@ def insecure_login(password):
         print("Login failed")
 
 
-
+def insecure_config():
+    # Vulnerabilidad: Configuración por defecto insegura
+    db_config = {
+        'user': 'root',
+        'password': '',
+        'host': 'localhost',
+        'database': 'test_db'
+    }
+    return db_config
 
 def main():
     # Bug: variable no usada
