@@ -48,6 +48,11 @@ def insecure_login(password):
         print("Login failed")
 
 
+def create_threads():
+    # Vulnerabilidad: Creación de hilos sin gestión adecuada
+    for _ in range(1000):
+        threading.Thread(target=lambda: print("Thread running")).start()
+
 def insecure_config():
     # Vulnerabilidad: Configuración por defecto insegura
     db_config = {
