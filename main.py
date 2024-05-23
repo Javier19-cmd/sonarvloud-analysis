@@ -57,7 +57,7 @@ def insecure_config():
     # Vulnerabilidad: Configuración por defecto insegura
     db_config = {
         'user': 'root',
-        'password': '',
+        'password': 'root',
         'host': 'localhost',
         'database': 'test_db'
     }
