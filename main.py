@@ -47,24 +47,12 @@ def insecure_login(password):
     else:
         print("Login failed")
 
-# Función que introduce una vulnerabilidad de hilo inseguro
-def unsafe_threading_example(shared_resource):
-    def thread_task():
-        nonlocal shared_resource
-        for _ in range(100000):
-            shared_resource += 1  # Acceso no sincronizado a recurso compartido
 
-    threads = []
-    for _ in range(10):
-        thread = threading.Thread(target=thread_task)
-        threads.append(thread)
-        thread.start()
-    
-    for thread in threads:
-        thread.join()
-    
-    print(f"Final shared resource value: {shared_resource}")
-
+# Función que introduce una vulnerabilidad de deserialización insegura
+def unsafe_deserialization(data):
+    # Vulnerabilidad: deserialización insegura
+    obj = pickle.loads(data)  # Permite deserializar datos arbitrarios y potencialmente maliciosos
+    return obj
 
 def main():
     # Bug: variable no usada
@@ -120,9 +108,9 @@ def main():
         # Exposing internal errors to the user
         print(f"An error occurred: {e}")  # Improper error handling
     
-        # Introduciendo vulnerabilidad de hilo inseguro
-    shared_resource = 0
-    unsafe_threading_example(shared_resource)
+    # Introduciendo vulnerabilidad de deserialización insegura
+    serialized_data = input("Enter serialized data: ")
+    unsafe_deserialization(serialized_data)
     
 if __name__ == "__main__":
     main()
