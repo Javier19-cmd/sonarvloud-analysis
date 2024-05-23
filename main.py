@@ -47,7 +47,23 @@ def insecure_login(password):
     else:
         print("Login failed")
 
+# Función que introduce una vulnerabilidad de hilo inseguro
+def unsafe_threading_example(shared_resource):
+    def thread_task():
+        nonlocal shared_resource
+        for _ in range(100000):
+            shared_resource += 1  # Acceso no sincronizado a recurso compartido
 
+    threads = []
+    for _ in range(10):
+        thread = threading.Thread(target=thread_task)
+        threads.append(thread)
+        thread.start()
+    
+    for thread in threads:
+        thread.join()
+    
+    print(f"Final shared resource value: {shared_resource}")
 
 
 def main():
@@ -104,13 +120,9 @@ def main():
         # Exposing internal errors to the user
         print(f"An error occurred: {e}")  # Improper error handling
     
-    conn = sqlite3.connect('example.db')
-    cursor = conn.cursor()
-
-    user_input = input("Introduce un nombre de usuario: ")
-    query = f"SELECT * FROM users WHERE username = '{user_input}'"
-    cursor.execute(query)  # Permite inyecciones SQL
-
+        # Introduciendo vulnerabilidad de hilo inseguro
+    shared_resource = 0
+    unsafe_threading_example(shared_resource)
     
 if __name__ == "__main__":
     main()
